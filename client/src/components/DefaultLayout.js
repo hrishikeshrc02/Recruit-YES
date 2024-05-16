@@ -10,6 +10,7 @@ import {
   UserOutlined,
   PlusOutlined,
   CheckOutlined,
+  RobotOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -64,6 +65,10 @@ class DefaultLayout extends React.Component {
 
             <Menu.Item key="/posted" icon={<CheckOutlined />}>
             <Link to='/posted'>Posted</Link>
+            </Menu.Item>
+
+            <Menu.Item key="/ai-help" icon={<RobotOutlined />}>
+            <Link to='/ai-help'>AI assit</Link>
             </Menu.Item>
 
             <Menu.Item key="/logout" icon={<LogoutOutlined />}>

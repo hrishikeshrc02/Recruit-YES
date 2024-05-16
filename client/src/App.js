@@ -15,6 +15,7 @@ import { getAllJobs } from "./redux/actions/jobActions.";
 import { useEffect } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import AIHelp from "./pages/AIHelp";
 import PostedJobs from "./pages/PostedJobs";
 import EditJob from "./pages/EditJob";
 import { getAllUsers } from "./redux/actions/userActions";
@@ -47,7 +48,7 @@ function App() {
         <ProtectedRoute path="/jobs/:id" exact component={JobInfo} />
 
         <ProtectedRoute path="/posted" exact component={PostedJobs} />
-
+        <ProtectedRoute path="/ai-help" exact component={AIHelp}/>
         <ProtectedRoute path="/editjob/:id" exact component={EditJob} />
         <ProtectedRoute path="/users/:id" exact component={UserInfo} />
       </BrowserRouter>
