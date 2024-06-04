@@ -1,11 +1,11 @@
 import { Layout, Menu } from 'antd';
 import React from 'react';
+import { jwtDecode } from 'jwt-decode'; // Correct import
 
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   PlusSquareOutlined,
-  
   HomeOutlined,
   UserOutlined,
   PlusOutlined,
@@ -24,7 +24,16 @@ class DefaultLayout extends React.Component {
       super(props);
       this.state = {
         collapsed: false,
+        user: null,
       };
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = jwtDecode(token); // Decode the token to get user info
+      this.setState({ user });
+    }
   }
 
   toggle = () => {
@@ -33,17 +42,18 @@ class DefaultLayout extends React.Component {
     });
   };
 
-  logout=()=>{
-      localStorage.removeItem('user')
-      window.location.reload()
-  }
+  logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
   render() {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const { user } = this.state;
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}
-         style={{position: 'sticky' , overflow : 'auto' , height:'100%' , top:0}}
+         style={{position: 'sticky', overflow: 'auto', height: '100%', top: 0}}
         >
           <div className="logo">
               {this.state.collapsed ? (<h1>RY</h1>) : (<h1>RecruitYES</h1>)}
@@ -68,7 +78,7 @@ class DefaultLayout extends React.Component {
             </Menu.Item>
 
             <Menu.Item key="/ai-help" icon={<RobotOutlined />}>
-            <Link to='/ai-help'>AI assit</Link>
+            <Link to='/ai-help'>AI Assist</Link>
             </Menu.Item>
 
             <Menu.Item key="/logout" icon={<LogoutOutlined />}>
@@ -77,7 +87,7 @@ class DefaultLayout extends React.Component {
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 , position: 'sticky' , overflow : 'auto' , top:0 , zIndex:9999}}>
+          <Header className="site-layout-background" style={{ padding: 0, position: 'sticky', overflow: 'auto', top: 0, zIndex: 9999}}>
            
            <div className="flex justify-content-between">
 
@@ -92,14 +102,12 @@ class DefaultLayout extends React.Component {
                 <Filter/>
              </div>
 
-             <div style={{display : this.state.collapsed ? 'none' : 'inline'}}>
-                  <h5 className="mr-2"><b>{user.username}</b></h5>
+             <div style={{display: this.state.collapsed ? 'none' : 'inline'}}>
+                  <h5 className="mr-2"><b>{user && user.username}</b></h5>
              </div>
 
            </div>
            
-
-
           </Header>
           <Content
             className="site-layout-background"
@@ -117,4 +125,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default DefaultLayout
+export default DefaultLayout;
