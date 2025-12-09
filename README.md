@@ -1,4 +1,4 @@
-Great, thanks for the details! Here’s a sample README file for your project, Recruit-YES:
+
 
 ---
 
